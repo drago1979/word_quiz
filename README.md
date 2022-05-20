@@ -11,3 +11,6 @@ Application scores the word by the following rules:
 a) Gives 1 point for each unique letter.  
 b) Gives 3 extra points if the word is a palindrome.  
 c) Gives 2 extra points if the word is “almost palindrome”. (“almost palindrome” = if by removing at most one letter from the word, the word will be a true palindrome.)  
+### How to use it:
+After app instalation:  
+- GET to http://127.0.0.1:8000/{concrete_word}
