@@ -6,9 +6,16 @@ namespace App\Service;
 
 class ScoringService
 {
-	private static $score = 0;
+	/**
+	 * @var int
+	 */
+	private $score = 0;
 
-	public static function scoreWord($word)
+	/**
+	 * @param $word
+	 * @return int
+	 */
+	public function scoreWord($word)
 	{
 		self::scoreUniqueLetters($word);
 
@@ -16,34 +23,37 @@ class ScoringService
 			self::scoreAlmostPalindrome($word);
 		}
 
-		return self::$score;
-
+		return $this->score;
 	}
 
 	/**
 	 * @param string $word
 	 * @return void
 	 */
-	public static function scoreUniqueLetters(string $word): void
+	private function scoreUniqueLetters(string $word): void
 	{
-		self::$score += count(array_unique(str_split($word)));
+		$this->score += count(array_unique(str_split($word)));
 	}
 
 	/**
 	 * @param string $word
 	 * @return void
 	 */
-	public static function scorePalindrome(string $word): bool
+	private function scorePalindrome(string $word): bool
 	{
 		if (self::isPalindrome($word)) {
-			self::$score += 3;
+			$this->score += 3;
 
 			return true;
 		};
 		return false;
 	}
 
-	public static function scoreAlmostPalindrome($word)
+	/**
+	 * @param $word
+	 * @return bool
+	 */
+	private function scoreAlmostPalindrome($word)
 	{
 		$k = 0;
 		$j = strlen($word) - 1;
@@ -55,7 +65,8 @@ class ScoringService
 				if (self::isPalindrome(substr_replace($word, '', $k, 1)) ||
 					self::isPalindrome(substr_replace($word, '', $j, 1))) {
 
-					self::$score = 2;
+					$this->score += 2;
+
 					return true;
 				}
 			}
@@ -65,7 +76,11 @@ class ScoringService
 		}
 	}
 
-	public static function isPalindrome($word)
+	/**
+	 * @param $word
+	 * @return bool
+	 */
+	private static function isPalindrome($word)
 	{
 		$wordToCheck = $word;
 
